@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Informes</title>
+    <!-- Incluye Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo para el sidebar */
+        #sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220px;
+            background-color: #a8b1bb;
+            color: white;
+            padding-top: 20px;
+        }
+
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #495057;
+        }
+
+        #content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <h3 class="text-center">Menú</h3>
+        <a href="{% url 'Pagina Principal' %}">Página Principal</a>
+        <a href="{% url 'informes' %}">Informes</a>
+        <!-- Agrega más enlaces según sea necesario -->
+    </div>
+
+    <!-- Contenido principal -->
+    <div id="content">
+        <div class="container mt-5">
+            <h1 class="mb-4">Informes</h1>
+
+            <!-- Sección para seleccionar la fecha -->
+            <form method="get" action="{% url 'informes' %}">
+                <div class="form-group row">
+                    <label for="fecha_dia" class="col-sm-2 col-form-label">Seleccionar Fecha:</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="fecha_dia" name="fecha_dia" value="{{ fecha_dia }}">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Sección del Gráfico -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    Histograma de Ingresos por Hora - {{ fecha_dia }}
+                </div>
+                <div class="card-body text-center">
+                    {% if graphic %}
+                        <img src="data:image/png;base64,{{ graphic }}" alt="Histograma de Ingresos por Hora" class="img-fluid">
+                    {% else %}
+                        <p>No hay datos disponibles para la fecha seleccionada.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Sección de Visitas Activas -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    Visitas Activas
+                </div>
+                <div class="card-body">
+                    {% if visitas_activas.exists %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Dirección</th>
+                                    <th>Tipo</th>
+                                    <!-- Agrega más columnas según tus campos -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for persona in visitas_activas %}
+                                    <tr>
+                                        <td>{{ persona.id }}</td>
+                                        <td>{{ persona.nombre }}</td>
+                                        <td>{{persona.apellido}}</td>
+                                        <td>{{persona.direccion}}</td>
+                                        <td>{{ persona.tipo }}</td>
+                                        <!-- Agrega más celdas según tus campos -->
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No hay visitas activas.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Sección de Visitas Inactivas -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    Visitas Inactivas
+                </div>
+                <div class="card-body">
+                    {% if visitas_inactivas.exists %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Dirección</th>
+                                    <th>Tipo</th>
+                                    <!-- Agrega más columnas según tus campos -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for persona in visitas_inactivas %}
+                                    <tr>
+                                        <td>{{ persona.id }}</td>
+                                        <td>{{ persona.nombre }}</td>
+                                        <td>{{persona.apellido}}</td>
+                                        <td>{{persona.direccion}}</td>
+                                        <td>{{ persona.tipo }}</td>
+                                        <!-- Agrega más celdas según tus campos -->
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No hay visitas inactivas.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incluye Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

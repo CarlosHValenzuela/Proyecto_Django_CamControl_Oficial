@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Frecuencia de Ingreso por Hora</title>
+</head>
+<body>
+    <h1>Frecuencia de Ingreso de Autos por Hora en el Día {{ fecha_dia }}</h1>
+    {% if graphic %}
+        <img src="data:image/png;base64,{{ graphic }}" alt="Histograma de Frecuencia de Ingreso por Hora">
+    {% else %}
+        <p>No hay datos disponibles para mostrar el gráfico.</p>
+    {% endif %}
+</body>
+</html>

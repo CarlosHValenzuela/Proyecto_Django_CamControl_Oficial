@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    background-color: #f5f5f5;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    height: 100vh;
+    padding: 20px;
+    color: white;
+}
+
+.sidebar .logo {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 20px;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: white;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.profile-container {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.personal-info h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.personal-info p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.profile-details .detail-item {
+    margin-bottom: 20px;
+}
+
+.profile-details .detail-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.profile-details .detail-item p {
+    font-size: 16px;
+}
+
+.system-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.system-info ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.system-info ul li {
+    font-size: 16px;
+}
