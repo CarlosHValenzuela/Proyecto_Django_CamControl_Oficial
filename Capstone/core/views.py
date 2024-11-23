@@ -9,11 +9,14 @@ from .forms import PersonaForm, AutoForm
 from django.http import JsonResponse
 from .forms import ExcelUploadForm
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')  # Cambia el backend a uno no interactivo
 import matplotlib.pyplot as plt
 from datetime import datetime
 from django.utils import timezone
 from io import BytesIO
 import base64
+
 
 @login_required
 def main(request):
