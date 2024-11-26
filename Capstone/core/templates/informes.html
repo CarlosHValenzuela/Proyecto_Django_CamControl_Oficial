@@ -28,7 +28,7 @@
             left: 0; /* Al inicio */
             top: 0; /* Arriba */
             padding: 20px; /* Espaciado interno */
-            background-color: #06daff91; /* Color de fondo */
+            background-color: #00c0e2; /* Color de fondo */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra */
         }
         .sidebar .nav-link {
@@ -104,8 +104,9 @@
 
             <!-- Sección del Gráfico -->
             <div class="card mb-4">
-                <div class="card-header">
-                    Histograma de Ingresos por Hora - {{ fecha_dia }}
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Histograma de Ingresos por Hora - {{ fecha_dia }}</span>
+                    <a href="{% url 'exportar_registros' %}?fecha={{ fecha_dia }}" class="btn btn-success">Descargar Excel</a>
                 </div>
                 <div class="card-body text-center">
                     {% if graphic %}

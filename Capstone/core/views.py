@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Persona, Auto, RegistroEntradaSalida
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
 from .forms import PersonaForm, AutoForm
 from django.http import JsonResponse
 from .forms import ExcelUploadForm
@@ -14,7 +14,9 @@ matplotlib.use('Agg')  # Cambia el backend a uno no interactivo
 import matplotlib.pyplot as plt
 from datetime import datetime
 from django.utils import timezone
+from dateutil.parser import parse
 from io import BytesIO
+from openpyxl import Workbook
 import base64
 
 
@@ -161,9 +163,11 @@ def cerrarSesion(request):
 def verificar_patente_detectada(request):
     return JsonResponse(last_detected_plate)
 
+@login_required  
 def reconocedor(request):
     return render(request, 'reconocedor.html')
 
+@login_required  
 def informes(request):
     # Obtener la fecha del parámetro GET, si existe
     fecha_dia_param = request.GET.get('fecha_dia')
@@ -276,3 +280,54 @@ def upload_excel(request):
         form = ExcelUploadForm()
 
     return render(request, 'upload_excel.html', {'form': form})
+
+def exportar_registros_excel(request):
+    # Obtener el parámetro de fecha
+    fecha = request.GET.get('fecha')
+    registros = RegistroEntradaSalida.objects.all()
+
+    # Manejo de la fecha (si se proporciona)
+    if fecha:
+        try:
+            # Intentar analizar la fecha proporcionada
+            fecha_inicio = parse(fecha)
+            fecha_fin = fecha_inicio.replace(hour=23, minute=59, second=59)
+            # Filtrar los registros por rango de fecha
+            registros = registros.filter(hora_entrada__range=(fecha_inicio, fecha_fin))
+        except ValueError:
+            return HttpResponse("Formato de fecha no válido", status=400)
+
+    # Crear el archivo Excel
+    wb = Workbook()
+    ws = wb.active
+
+    # Reemplaza caracteres no válidos en el título
+    titulo_hoja = "Registros de Entrada y Salida"
+    ws.title = titulo_hoja[:31]  # Limitar a 31 caracteres
+
+    # Agregar encabezados al archivo
+    encabezados = [
+        "ID", "Persona", "Auto", "Hora de Entrada", "Hora de Salida", "Tipo de Entrada"
+    ]
+    ws.append(encabezados)
+
+    # Agregar datos al archivo
+    for registro in registros:
+        ws.append([
+            registro.id,
+            str(registro.persona) if registro.persona else "N/A",
+            str(registro.auto) if registro.auto else "N/A",
+            registro.hora_entrada.strftime('%Y-%m-%d %H:%M:%S'),
+            registro.hora_salida.strftime('%Y-%m-%d %H:%M:%S') if registro.hora_salida else "N/A",
+            dict(RegistroEntradaSalida._meta.get_field('tipo_entrada').choices).get(registro.tipo_entrada),
+        ])
+
+    # Preparar la respuesta HTTP
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = f'attachment; filename="registros_{fecha if fecha else "todos"}.xlsx"'
+
+    # Guardar el archivo Excel en la respuesta
+    wb.save(response)
+    return response

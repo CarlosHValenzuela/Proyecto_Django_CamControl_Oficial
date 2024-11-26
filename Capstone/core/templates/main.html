@@ -10,7 +10,7 @@
     <style>
         body {
             padding-left: 250px; /* Ajusta el padding izquierdo para evitar que el contenido se superponga al sidebar */
-            background-color: #f8f9fa; /* Fondo claro */
+            background-color: #f0f0f0; /* Fondo claro */
             min-height: 100vh; /* Ocupa toda la altura de la ventana */
             display: flex;
             flex-direction: column;
@@ -28,7 +28,7 @@
             left: 0; /* Al inicio */
             top: 0; /* Arriba */
             padding: 20px; /* Espaciado interno */
-            background-color: #06daff91; /* Color de fondo */
+            background-color: #00c0e2; /* Color de fondo */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra */
         }
         .sidebar .nav-link {
@@ -36,7 +36,7 @@
             text-decoration: none;
         }
         .sidebar .nav-link:hover {
-            background-color: #ffffff;
+            background-color: #03a3b8;
             border-radius: 5px;
         }
 
@@ -55,6 +55,11 @@
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más grande */
         }
 
+        .sidebar .nav-link.text-danger:hover {
+            background-color: rgb(252, 114, 114);
+            border-radius: 5px;
+        }
+
         @keyframes fadeIn {
             0% {
                 opacity: 0;
@@ -64,6 +69,31 @@
                 opacity: 1;
                 transform: scale(1);
             }
+        }
+
+        .table-container {
+        background-color: #e9ecef; /* Fondo gris más oscuro para el contenedor */
+        color: #343a40; /* Texto gris oscuro */
+        }
+        .table th {
+            background-color: #adb5bd; /* Fondo gris para el encabezado de la tabla */
+            color: white; /* Texto blanco para contraste */
+        }
+        .table td {
+            color: #495057; /* Texto gris oscuro para las celdas */
+        }
+        .form-select {
+            background-color: #f8f9fa; /* Fondo gris claro para el selector */
+            color: #343a40; /* Texto gris oscuro */
+            border-color: #ced4da; /* Borde gris */
+        }
+        .btn-primary {
+            background-color: #6c757d; /* Botón gris */
+            border-color: #6c757d; /* Borde gris */
+        }
+        .btn-primary:hover {
+            background-color: #5a6268; /* Botón gris más oscuro al pasar el ratón */
+            border-color: #545b62; /* Borde gris más oscuro */
         }
     </style>
 
@@ -105,7 +135,6 @@
 
     <!-- Contenido principal -->
     <div class="main-container">
-        <h2>Bienvenido a tu página principal</h2>
         <!-- Tabla de Residentes -->
         <div class="container">
             <h1 class="text-center my-4">Listado de Personas</h1>

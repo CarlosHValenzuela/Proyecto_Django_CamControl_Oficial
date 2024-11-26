@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,7 @@
     <style>
         body {
             padding-left: 250px; /* Ajusta el padding izquierdo para evitar que el contenido se superponga al sidebar */
-            background-color: #f8f9fa; /* Fondo claro */
+            background-color: #f0f0f0; /* Fondo claro */
             min-height: 100vh; /* Ocupa toda la altura de la ventana */
             display: flex;
             flex-direction: column;
@@ -28,7 +28,7 @@
             left: 0; /* Al inicio */
             top: 0; /* Arriba */
             padding: 20px; /* Espaciado interno */
-            background-color: #06daff91; /* Color de fondo */
+            background-color: #00c0e2; /* Color de fondo */
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra */
         }
         .sidebar .nav-link {
@@ -36,34 +36,48 @@
             text-decoration: none;
         }
         .sidebar .nav-link:hover {
-            background-color: #ffffff;
+            background-color: #03a3b8;
             border-radius: 5px;
         }
-
-        /* Estilos para el logo */
         .logo {
-            border-radius: 50%; /* Hacer el logo circular */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-            transition: transform 0.3s ease-in-out; /* Transición suave para hover */
-            border: 3px solid #06daff91; /* Borde con el color del sidebar */
-            padding: 10px; /* Espaciado interno */
-            animation: fadeIn 1s ease-out; /* Animación al cargar */
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            border: 3px solid #06daff91;
+            padding: 10px;
+            animation: fadeIn 1s ease-out;
         }
-
         .logo:hover {
-            transform: scale(1.1); /* Aumenta el tamaño ligeramente */
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más grande */
+            transform: scale(1.1);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
         }
-
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .table-container {
+            background-color: #e9ecef; /* Fondo gris */
+            color: #343a40; /* Texto oscuro */
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .table th {
+            background-color: #adb5bd; /* Fondo gris oscuro */
+            color: white;
+        }
+        .table td {
+            color: #495057; /* Texto gris oscuro */
+        }
+        .btn-primary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-primary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+        .btn-danger:hover {
+            background-color: #e63946;
         }
     </style>
 </head>
@@ -78,10 +92,10 @@
         <nav class="nav-menu">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'Pagina Principal' %}">Pagina Principal</a>
+                    <a class="nav-link" href="{% url 'Pagina Principal' %}">Página Principal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'crear Auto' %}" class="account">Crear Auto</a>
+                    <a class="nav-link" href="{% url 'crear Auto' %}">Crear Auto</a>
                 </li>
             </ul>
         </nav>
@@ -90,8 +104,6 @@
     <!-- Contenido principal -->
     <div class="container main-container">
         <h1 class="text-center my-4">Listado de Vehículos</h1>
-
-        <!-- Descripción -->
         <p class="description text-center">
             Aquí encontrarás todos los vehículos registrados en el sistema. Puedes editarlos o eliminarlos según sea necesario.
         </p>

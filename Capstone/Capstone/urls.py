@@ -40,8 +40,8 @@ urlpatterns = [
     path('reconocedor/', views.reconocedor, name='reconocedor'),
     path('informes/', views.informes, name='informes'),
     path('upload/', views.upload_excel, name='upload_excel'),
-    # Si deseas aceptar una fecha, puedes agregar otro patrón de URL
     path('informes/<str:fecha_dia>/', views.informes, name='informes_con_fecha'),
+    path('exportar_registros/', views.exportar_registros_excel, name='exportar_registros'),
     
 ]
 

@@ -45,6 +45,7 @@ def extract_characters(roi):
 # Generador de frames con detección de caracteres
 def generate_frames():
     camera = cv2.VideoCapture(0)
+    #camera = cv2.VideoCapture("rtsp://admin:admin2002@192.168.0.86:554/cam/realmonitor?channel=1&subtype=0")
     while True:
         ret, frame = camera.read()
         if not ret:
@@ -54,8 +55,8 @@ def generate_frames():
         # Verificar si han pasado 30 segundos desde la última detección
         if last_detected_plate['last_detected_time']:
             elapsed_time = timezone.now() - last_detected_plate['last_detected_time']
-            if elapsed_time.seconds < 30:  # Si no han pasado 30 segundos, saltar el ciclo
-                print(f"Cooldown activado: {30 - elapsed_time.seconds} segundos restantes.")
+            if elapsed_time.seconds < 10:  # Si no han pasado 30 segundos, saltar el ciclo
+                print(f"Cooldown activado: {10 - elapsed_time.seconds} segundos restantes.")
                 continue
 
         # Procesamiento de la imagen
