@@ -232,55 +232,7 @@ def informes(request):
     }
     return render(request, 'informes.html', context)
 
-
-def upload_excel(request):
-    if request.method == "POST":
-        form = ExcelUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            file = request.FILES['file']
-            try:
-                # Leer el archivo Excel
-                data = pd.read_excel(file)
-
-                # Validar que las columnas requeridas estén presentes
-                required_columns = ['persona', 'auto', 'hora_entrada', 'hora_salida', 'tipo_entrada']
-                if not all(col in data.columns for col in required_columns):
-                    raise ValueError("El archivo debe contener las columnas: persona, auto, hora_entrada, hora_salida, tipo_entrada.")
-
-                # Crear registros
-                registros = []
-                for _, row in data.iterrows():
-                    # Obtener los objetos relacionados (persona y auto)
-                    persona = Persona.objects.filter(id=row['persona']).first() if pd.notna(row['persona']) else None
-                    auto = Auto.objects.filter(id=row['auto']).first() if pd.notna(row['auto']) else None
-
-                    # Validar tipo de entrada
-                    if row['tipo_entrada'] not in ['P', 'V']:
-                        raise ValueError(f"Tipo de entrada inválido: {row['tipo_entrada']} en la fila {_ + 1}.")
-
-                    # Crear el registro
-                    registro = RegistroEntradaSalida(
-                        persona=persona,
-                        auto=auto,
-                        hora_entrada=row['hora_entrada'],
-                        hora_salida=row['hora_salida'] if pd.notna(row['hora_salida']) else None,
-                        tipo_entrada=row['tipo_entrada']
-                    )
-                    registros.append(registro)
-
-                # Guardar todos los registros en la base de datos
-                RegistroEntradaSalida.objects.bulk_create(registros)
-
-                return render(request, 'success.html', {'message': 'Registros subidos exitosamente!'})
-
-            except Exception as e:
-                return render(request, 'error.html', {'error': str(e)})
-
-    else:
-        form = ExcelUploadForm()
-
-    return render(request, 'upload_excel.html', {'form': form})
-
+@login_required  
 def exportar_registros_excel(request):
     # Obtener el parámetro de fecha
     fecha = request.GET.get('fecha')

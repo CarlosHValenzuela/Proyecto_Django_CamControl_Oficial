@@ -44,8 +44,8 @@ def extract_characters(roi):
 
 # Generador de frames con detección de caracteres
 def generate_frames():
-    camera = cv2.VideoCapture(0)
-    #camera = cv2.VideoCapture("rtsp://admin:admin2002@192.168.0.86:554/cam/realmonitor?channel=1&subtype=0")
+    camera = cv2.VideoCapture(0) #Utilizar Camara que tiene el equipo
+    camera = cv2.VideoCapture("rtsp://admin:admin2002@192.168.0.86:554/cam/realmonitor?channel=1&subtype=0") #Utilizar Camara IP
     while True:
         ret, frame = camera.read()
         if not ret:
